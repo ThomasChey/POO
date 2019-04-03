@@ -3,7 +3,20 @@
 class Personnage
 {
 
-// -- attributs = variable --
+// Les variables et fonctions propres à la CLASS ont le mot clé static qui les précède
+// static var --> elle sera donc appellée de la manière suivante self::var (personnage::var dans index.php)
+    private static $_compteur = 0;
+    public static function getCompteur(){
+        return self::$_compteur;
+    }
+
+
+// Constantes de classe --> UNE CONSTANTE EN POO EST RELATIVE A LA CLASSE ET PAS AUX OBJETS !!! ex: self::FORCE_PETITE
+    const FORCE_PETITE = 20;
+    const FORCE_MOYENNE = 50;
+    const FORCE_GRANDE = 90;
+
+// -- attributs = variable --> ILS SONT RELATIFS AUX OBJETS ! ex: $this->_nom
 
     private $_nom;
     private $_force;
@@ -21,6 +34,11 @@ class Personnage
         $this->setLocalisation($lieu);
         $this->setExperience($xp);
         $this->setDegats($d);
+        self::$_compteur++;
+        // $this fait référence à l'objet instancié ( Vegeta, Sangoku ...). -> correspond à un élément DANS l'objet instancié.
+        // self fait référence à la classe ou je suis actuellement (Personnage). :: correspond à un élément DANS la classe ou je suis actuellement.
+        // Quand on va créer un objet dans index.php ( $perso1=new Personnage(a,b,c,x..) ),
+        // on peut acceder $perso1 remplace $this !! et Personnage:: remplace self::
     }
 
     public function display()
@@ -30,6 +48,13 @@ class Personnage
         echo 'Localisation : ' . $this->_localisation . '<br/>';
         echo 'Experience : ' . $this->_experience . '<br/>';
         echo 'Dégats : ' . $this->_degats . '<br/>';
+
+        // Il est préférable de faire comme suit :
+//        echo 'Prenom : ' . $this->getNom() . '<br/>';
+//        echo 'Force : ' . $this->getForce() . '<br/>';
+//        echo 'Localisation : ' . $this->getLocalisation() . '<br/>';
+//        echo 'Experience : ' . $this->afficherExperience() . '<br/>';
+//        echo 'Dégats : ' . $this->getDegats() . '<br/>';
     }
 
 // -- Méthodes = Fonctions --
@@ -103,6 +128,9 @@ class Personnage
             trigger_error('Attention la force assignée doit être inférieure à 3000 !', E_USER_WARNING);
             return;
         }
+        if(in_array($f, [self::FORCE_PETITE, self::FORCE_MOYENNE, self::FORCE_GRANDE])){
+            $this->_force = $f;
+        }
         $this->_force = $f;
     }
 
@@ -129,6 +157,7 @@ class Personnage
     }
 
 }
+
 
 
 //echo '<br/> Voici les infos de mon personnage 1 : <br/>';
