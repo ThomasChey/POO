@@ -5,7 +5,7 @@ final class Guerrier extends Personnage // Guerrier hérite des attributs et mé
     private $_arme;
 
     public function getArme(){
-        echo $this->_arme;
+        return $this->_arme;
     }
 
     public function setArme($arm){

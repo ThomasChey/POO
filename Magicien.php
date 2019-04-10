@@ -19,7 +19,7 @@ class Magicien extends Personnage// Magicien hérite des attributs et méthodes 
     }
 
     public function getMagie() {
-        echo $this->_magie;
+        return $this->_magie;
     }
 
     public function setMagie($m) {
